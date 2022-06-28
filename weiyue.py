@@ -3,7 +3,7 @@ import jwt
 import uuid
 import os
 
-from database import db, to_json, User, 违约认定人工审核表, 客户表 
+from database import db, to_json, User, 违约认定人工审核表, 客户表, 违约风险原因表 
 
 weiyue = Blueprint('weiyue', __name__, url_prefix='/weiyue')
 
@@ -115,14 +115,14 @@ def show():
 @weiyue.route('/reason', methods=['POST'])
 def reason():
     try:
-        users = User.query.all()
+        reasons = 违约风险原因表.query.all()
     except Exception as e:
         print(e)
         return {'status': f'数据库连接失败,请联系管理员!'}
 
-    if (users is None):
+    if (reasons is None):
         return {}
     # elif (customs.违约情况 == 1):
     #     return {'status': '该客户已违约, 请勿额外申请'}
     else:
-        return jsonify(to_json(users))
+        return jsonify(to_json(reasons))

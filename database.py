@@ -108,4 +108,21 @@ class 重生人工审核表(db.Model):
     db.to_dict = to_dict
     db.dobule_to_dict = dobule_to_dict
 
-
+class 违约风险原因表(db.Model):
+    违约原因编号 = db.Column(db.String(16), primary_key=True)
+    违约原因 = db.Column(db.String(512))
+    是否启用 = db.Column(db.Boolean)
+    def to_dict(self):
+        model_dict = dict(self.__dict__)
+        del model_dict['_sa_instance_state']
+        return model_dict
+    def dobule_to_dict(self):
+        result = {}
+        for key in self.__mapper__.c.keys():
+            if getattr(self, key) is not None:
+                result[key] = str(getattr(self, key))
+            else:
+                result[key] = getattr(self, key)
+        return result
+    db.to_dict = to_dict
+    db.dobule_to_dict = dobule_to_dict
