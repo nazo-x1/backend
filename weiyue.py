@@ -108,8 +108,8 @@ def show():
     return jsonify(to_json(customs))
 
 
-@weiyue.route('/reason', methods=['POST'])
-def reason():
+@weiyue.route('/enabled_reason', methods=['POST'])
+def en_reason():
     try:
         avaiblereasons = V_已启用的违约原因.query.all()
     except Exception as e:
@@ -117,6 +117,17 @@ def reason():
         return {'status': f'数据库连接失败,请联系管理员!'}
 
     return jsonify(to_json(avaiblereasons))
+
+
+@weiyue.route('/all_reason', methods=['POST'])
+def all_reason():
+    try:
+        allreasons = 违约风险原因表.query.all()
+    except Exception as e:
+        print(e)
+        return {'status': f'数据库连接失败,请联系管理员!'}
+
+    return jsonify(to_json(allreasons))
 
 
 @weiyue.route('/records', methods=['POST'])

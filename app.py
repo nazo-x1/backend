@@ -1,5 +1,6 @@
 from flask import Flask
 from weiyue import weiyue
+from remake import remake
 from database import db
 from user import user
 import configs
@@ -8,6 +9,7 @@ app = Flask(__name__)
 app.config.from_object(configs)
 db.init_app(app)
 app.register_blueprint(weiyue)
+app.register_blueprint(remake)
 app.register_blueprint(user)
 
 
