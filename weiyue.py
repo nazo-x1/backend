@@ -3,7 +3,7 @@ import jwt
 import uuid
 import os
 
-from database import db, to_json, User, 违约认定人工审核表, 客户表, 违约风险原因表
+from database import V_已启用的违约原因, V_违约认定审核信息查询, db, to_json, User, 违约认定人工审核表, 客户表, 违约风险原因表
 
 weiyue = Blueprint('weiyue', __name__, url_prefix='/weiyue')
 
@@ -88,7 +88,7 @@ def verify():
     setattr(applyForm, '审核状态', passed)
     setattr(applyForm, '认定人', g.user.username)
     try:
-        # db.session.add(applyForm)
+        db.session.update(applyForm)
         db.session.commit()
     except Exception as e:
         print(e)
@@ -111,12 +111,24 @@ def show():
 @weiyue.route('/reason', methods=['POST'])
 def reason():
     try:
-        avaiblereasons = 违约风险原因表.query.all()
+        avaiblereasons = V_已启用的违约原因.query.all()
     except Exception as e:
         print(e)
         return {'status': f'数据库连接失败,请联系管理员!'}
 
     return jsonify(to_json(avaiblereasons))
+
+
+@weiyue.route('/records', methods=['POST'])
+def showWeiyueList():
+    try:
+        records = V_违约认定审核信息查询.query.all()
+    except Exception as e:
+        print(e)
+        return {'status': f'数据库连接失败,请联系管理员!'}
+
+    return jsonify(to_json(records))
+
 
 @weiyue.after_request
 def add_header(response):
