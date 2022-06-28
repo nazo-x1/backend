@@ -3,7 +3,7 @@ import jwt
 import uuid
 import os
 
-from database import db, to_json, User, 违约认定人工审核表, 客户表, 违约风险原因表 
+from database import db, to_json, User, 违约认定人工审核表, 客户表, 违约风险原因表
 
 weiyue = Blueprint('weiyue', __name__, url_prefix='/weiyue')
 
@@ -63,7 +63,8 @@ def new():
     if not(checkResult['status'] == 'success'):
         return checkResult
 
-    applyForm = 违约认定人工审核表(客户号=customid, 违约原因编号=reason, 严重程度=dangerLevel, 认定人="", 外部最新等级=outLevel, 备注=info)
+    applyForm = 违约认定人工审核表(违约审核编号=os.urandom(8).hex(),客户号=customid, 违约原因编号=reason,
+                          严重程度=dangerLevel, 认定人="", 外部最新等级=outLevel, 备注=info)
     try:
         db.session.add(applyForm)
         db.session.commit()
@@ -83,7 +84,7 @@ def verify():
     if not(checkResult['status'] == 'success'):
         return checkResult
     if not(passed == "true" or passed == "false"):
-        return {"status":"请选择审核通过与否!"}
+        return {"status": "请选择审核通过与否!"}
     setattr(applyForm, '审核状态', passed)
     setattr(applyForm, '认定人', g.user.username)
     try:
@@ -104,25 +105,20 @@ def show():
         print(e)
         return {'status': f'数据库连接失败,请联系管理员!'}
 
-    if (customs is None):
-        return {}
-    # elif (customs.违约情况 == 1):
-    #     return {'status': '该客户已违约, 请勿额外申请'}
-    else:
-        return {'status': f'success',"customs":jsonify(to_json(customs))}
+    return jsonify(to_json(customs))
 
 
 @weiyue.route('/reason', methods=['POST'])
 def reason():
     try:
-        reasons = 违约风险原因表.query.all()
+        avaiblereasons = 违约风险原因表.query.all()
     except Exception as e:
         print(e)
         return {'status': f'数据库连接失败,请联系管理员!'}
 
-    if (reasons is None):
-        return {}
-    # elif (customs.违约情况 == 1):
-    #     return {'status': '该客户已违约, 请勿额外申请'}
-    else:
-        return jsonify(to_json(reasons))
+    return jsonify(to_json(avaiblereasons))
+
+@weiyue.after_request
+def add_header(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
