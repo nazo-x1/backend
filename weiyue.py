@@ -3,7 +3,7 @@ import jwt
 import uuid
 import os
 
-from database import db, to_json, User, 违约认定人工审核表, 客户表, 
+from database import db, to_json, User, 违约认定人工审核表, 客户表 
 
 weiyue = Blueprint('weiyue', __name__, url_prefix='/weiyue')
 
@@ -113,7 +113,7 @@ def show():
 
 
 @weiyue.route('/reason', methods=['POST'])
-def showuser():
+def reason():
     try:
         users = User.query.all()
     except Exception as e:
