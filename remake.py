@@ -49,11 +49,10 @@ def showWeiyueList():
         return jsonify(json_list = 违约认定人工审核表.query.all())
 
 def new():
-    remakeid = request.form.get("remakeid", type=int, default=None)
     remakeReason = request.form.get("remakeReason", type=int, default=None)
     weiyueid = request.form.get("weiyueid", type=int, default=None)
 
-    applyForm = 重生人工审核表(重生审核编号=remakeid, 重生原因编号=remakeReason, 违约原因编号=weiyueid, 重生申请时间="", 审核状态="", 负责人="")
+    applyForm = 重生人工审核表(重生原因编号=remakeReason, 违约原因编号=weiyueid, 重生申请时间="", 审核状态="", 负责人="")
     try:
         db.session.add(applyForm)
         db.session.commit()
