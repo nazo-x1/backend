@@ -3,7 +3,7 @@ import jwt
 import uuid
 import os
 
-from database import db, to_json, User, 违约认定人工审核表, 客户表, 违约风险原因表
+from database import db, to_json, User, 违约认定人工审核表, 客户表, 违约风险原因表, V_违约认定审核总信息
 
 weiyue = Blueprint('weiyue', __name__, url_prefix='/weiyue')
 
@@ -45,7 +45,7 @@ def getApplyForm(ApplyFormid):
 
     if (applyForm is None):
         return {'status': "不存在的申请!"}, None
-    elif (applyForm.审核状态 == "true" or applyForm.审核状态 == "false"):
+    elif (applyForm.审核状态 == "审核通过" or applyForm.审核状态 == "审核未通过"):
         return {'status': '该申请已完成处理, 需要修改违约状态请使用重生功能!'}, None
     else:
         return {'status': 'success'}, applyForm
@@ -78,17 +78,17 @@ def new():
 @weiyue.route('/verify', methods=['POST'])
 def verify():
     passed = request.form.get("passed", type=str, default='').lower()
-    id = request.form.get("id", type=int, default=None)
+    id = request.form.get("id", type=str, default=None)
 
     checkResult, applyForm = getApplyForm(id)
     if not(checkResult['status'] == 'success'):
         return checkResult
-    if not(passed == "true" or passed == "false"):
+    if not(passed == "审核通过" or passed == "审核未通过"):
         return {"status": "请选择审核通过与否!"}
     setattr(applyForm, '审核状态', passed)
     setattr(applyForm, '认定人', g.user.username)
     try:
-        db.session.update(applyForm)
+        # db.session.update(applyForm)
         db.session.commit()
     except Exception as e:
         print(e)
@@ -122,13 +122,13 @@ def reason():
             reasons = 违约风险原因表.query.filter_by(是否启用=enable)
         except Exception as e:
             print(e)
-            return {'status': f'数据库连接失败,请联系管理员!'}
 
     return jsonify(to_json(reasons))
 
+
 @weiyue.route('/change_reason', methods=['POST'])
 def cgreason():
-    enable = request.form.get("enable", type=int, default=None)
+    enable = request.form.get("enable", type=bool, default=None)
     reasonid = request.form.get("reasonid", type=int, default=None)
     if enable is None:
         try:
@@ -141,15 +141,16 @@ def cgreason():
             reasons = 违约风险原因表.query.get(reasonid)
             setattr(reasons, '是否启用', enable)
             try:
-                db.session.update(reasons)
+                # db.session.update(reasons)
                 db.session.commit()
+                # db.session.flush()
             except Exception as e:
                 print(e)
                 return {'status': f'数据库连接失败,请联系管理员!'}
         except Exception as e:
             print(e)
             return {'status': '没有这个风险'}
-
+        return {'status': 'success'}
     return jsonify(to_json(reasons))
 
 
@@ -158,13 +159,13 @@ def showWeiyueRecords():
     passQuery = request.form.get("passed", type=str, default=None)
     if not passQuery:
         try:
-            records = 违约认定人工审核表.query.all()
+            records = V_违约认定审核总信息.query.all()
         except Exception as e:
             print(e)
             return {'status': f'数据库连接失败,请联系管理员!'}
     else:
         try:
-            records = 违约认定人工审核表.query.filter_by(审核状态=passQuery)
+            records = V_违约认定审核总信息.query.filter_by(审核状态=passQuery)
         except Exception as e:
             print(e)
             return {'status': f'数据库连接失败,请联系管理员!'}

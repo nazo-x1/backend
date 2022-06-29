@@ -3,7 +3,7 @@ import jwt
 import uuid
 import os
 
-from database import User, V_违约认定审核信息查询, db, V_违约重生审核, to_json, 违约认定人工审核表, 重生人工审核表, 重生原因表
+from database import User, db, V_重生审核, to_json, 违约认定人工审核表, 重生人工审核表, 重生原因表
 
 remake = Blueprint('remake', __name__, url_prefix='/remake')
 
@@ -34,18 +34,18 @@ def showReasons():
 
 @remake.route('/apply', methods=['POST'])
 def new():
-    remakeReason = request.form.get("reason", type=int, default=None)
     weiyueid = request.form.get("id", type=str, default=None)
+    remakeReasonid = request.form.get("reasonid", type=int, default=None)
     try:
         record = 违约认定人工审核表.query.get(weiyueid)
     except Exception as e:
         return {'status': '审核表不存在'}
 
-    if not(record.审核状态 == "true"):
+    if not(record.审核状态 == "审核通过"):
         return {'status': '未被通过的违约申请无需重生'}
 
     applyForm = 重生人工审核表(重生审核编号=os.urandom(8).hex(),
-                        重生原因编号=remakeReason, 违约审核编号=weiyueid)
+                        重生原因编号=remakeReasonid, 违约审核编号=weiyueid)
     try:
         db.session.add(applyForm)
         db.session.commit()
@@ -60,17 +60,17 @@ def showRemakeRecords():
     passQuery = request.form.get("passed", type=str, default=None)
     if not passQuery:
         try:
-            reasons = 重生人工审核表.query.all()
+            records = V_重生审核.query.all()
         except Exception as e:
             print(e)
             return {'status': f'数据库连接失败,请联系管理员!'}
     else:
         try:
-            reasons = 重生人工审核表.query.filter_by(审核状态=passQuery)
+            records = V_重生审核.query.filter_by(审核状态=passQuery)
         except Exception as e:
             print(e)
             return {'status': f'数据库连接失败,请联系管理员!'}
-    return jsonify(to_json(reasons))
+    return jsonify(to_json(records))
 
 
 def getApplyForm(ApplyFormid):
@@ -82,7 +82,7 @@ def getApplyForm(ApplyFormid):
 
     if (applyForm is None):
         return {'status': "不存在的申请!"}, None
-    elif (applyForm.审核状态 == "true" or applyForm.审核状态 == "false"):
+    elif (applyForm.审核状态 == "审核通过" or applyForm.审核状态 == "审核未通过"):
         return {'status': '该重生申请已完成处理, 需要修改违约状态请重新申请重生!'}, None
     else:
         return {'status': 'success'}, applyForm
@@ -96,12 +96,12 @@ def verify():
     checkResult, applyForm = getApplyForm(id)
     if not(checkResult['status'] == 'success'):
         return checkResult
-    if not(passed == "true" or passed == "false"):
+    if not(passed == "审核通过" or passed == "审核未通过"):
         return {"status": "请选择审核通过与否!"}
     setattr(applyForm, '审核状态', passed)
     setattr(applyForm, '负责人', g.user.username)
     try:
-        db.session.update(applyForm)
+        # db.session.update(applyForm)
         db.session.commit()
     except Exception as e:
         print(e)
