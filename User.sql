@@ -20,7 +20,7 @@ DROP TABLE IF EXISTS `客户表`;
 CREATE TABLE IF NOT EXISTS `客户表` (
   `客户号` varchar(16) NOT NULL,
   `客户名` varchar(128) NOT NULL,
-  `性别` varchar(2) DEFAULT NULL,
+  `性别` varchar(4) DEFAULT NULL,
   `区域` varchar(50) NOT NULL,
   `行业` varchar(50) NOT NULL,
   `联系方式` varchar(20) NOT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `违约认定人工审核表` (
   `严重程度` varchar(2) NOT NULL,
   `认定人` varchar(128) NOT NULL,
   `认定申请时间` datetime DEFAULT NULL,
-  `外部最新等级` varchar(2) NOT NULL,
+  `外部最新等级` varchar(4) NOT NULL,
   `备注` varchar(512) DEFAULT NULL,
   `审核状态` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`违约审核编号`),
