@@ -55,7 +55,7 @@ def getApplyForm(ApplyFormid):
 def new():
     customid = request.form.get("customid", type=str, default=None)
     outLevel = request.form.get("outLevel", type=int, default='0')
-    reasonid = request.form.get("reasonid", type=int, default=None)
+    reasonid = request.form.get("reason", type=int, default=None)
     dangerLevel = request.form.get("dangerLevel", type=int, default='1')
     info = request.form.get("info", type=str, default=None)
 
