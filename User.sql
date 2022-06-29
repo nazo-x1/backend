@@ -178,7 +178,7 @@ SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLE
 DELIMITER //
 CREATE TRIGGER `违约认定人工审核表_after_update` AFTER UPDATE ON `违约认定人工审核表` FOR EACH ROW BEGIN
 	Update `客户表`
-		SET 违约情况=1
+		SET `违约情况`=1
 		WHERE `客户号`=NEW.`客户号` AND NEW.审核状态 = '审核通过';
 END//
 DELIMITER ;
