@@ -9,237 +9,237 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  com.user 的数据：~1 rows (大约)
+-- ���ڵ�����  com.user �����ݣ�~1 rows (��Լ)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`username`, `password`, `random`) VALUES
 	('aaa', 'aaaa', 'aaaaa');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `客户表`;
-CREATE TABLE IF NOT EXISTS `客户表` (
-  `客户号` varchar(16) NOT NULL,
-  `客户名` varchar(128) NOT NULL,
-  `性别` varchar(4) DEFAULT NULL,
-  `区域` varchar(50) NOT NULL,
-  `行业` varchar(50) NOT NULL,
-  `联系方式` varchar(20) NOT NULL,
-  `集团` varchar(40) DEFAULT NULL,
-  `违约情况` Integer DEFAULT 0,
-  PRIMARY KEY (`客户号`)
+DROP TABLE IF EXISTS `�ͻ���`;
+CREATE TABLE IF NOT EXISTS `�ͻ���` (
+  `�ͻ���` varchar(16) NOT NULL,
+  `�ͻ���` varchar(128) NOT NULL,
+  `�Ա�` varchar(4) DEFAULT NULL,
+  `����` varchar(50) NOT NULL,
+  `��ҵ` varchar(50) NOT NULL,
+  `��ϵ��ʽ` varchar(20) NOT NULL,
+  `����` varchar(40) DEFAULT NULL,
+  `ΥԼ���` Integer DEFAULT 0,
+  PRIMARY KEY (`�ͻ���`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  com.客户表 的数据：~3 rows (大约)
-DELETE FROM `客户表`;
-/*!40000 ALTER TABLE `客户表` DISABLE KEYS */;
-INSERT INTO `客户表` (`客户号`, `客户名`, `性别`, `区域`, `行业`, `联系方式`, `集团`, `违约情况`) VALUES
-	('1', '张三', '男', '北京', '学生', '110', 'HDU', 0),
-	('2', '李四', '未', '杭州', '学生', '120', 'HDU', 0),
-	('3', '王五', '女', '杭州', '学生', '130', 'AAA', 0);
-/*!40000 ALTER TABLE `客户表` ENABLE KEYS */;
+-- ���ڵ�����  com.�ͻ��� �����ݣ�~3 rows (��Լ)
+DELETE FROM `�ͻ���`;
+/*!40000 ALTER TABLE `�ͻ���` DISABLE KEYS */;
+INSERT INTO `�ͻ���` (`�ͻ���`, `�ͻ���`, `�Ա�`, `����`, `��ҵ`, `��ϵ��ʽ`, `����`, `ΥԼ���`) VALUES
+	('1', '����', '��', '����', 'ѧ��', '110', 'HDU', 0),
+	('2', '����', 'δ', '����', 'ѧ��', '120', 'HDU', 0),
+	('3', '����', 'Ů', '����', 'ѧ��', '130', 'AAA', 0);
+/*!40000 ALTER TABLE `�ͻ���` ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `违约风险原因表`;
-CREATE TABLE IF NOT EXISTS `违约风险原因表` (
-  `违约原因编号` varchar(16) NOT NULL,
-  `违约原因` varchar(512) NOT NULL,
-  `是否启用` Integer DEFAULT 1,
-  PRIMARY KEY (`违约原因编号`)
+DROP TABLE IF EXISTS `ΥԼ����ԭ���`;
+CREATE TABLE IF NOT EXISTS `ΥԼ����ԭ���` (
+  `ΥԼԭ����` varchar(16) NOT NULL,
+  `ΥԼԭ��` varchar(512) NOT NULL,
+  `�Ƿ�����` Integer DEFAULT 1,
+  PRIMARY KEY (`ΥԼԭ����`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  com.违约风险原因表 的数据：~7 rows (大约)
-DELETE FROM `违约风险原因表`;
-/*!40000 ALTER TABLE `违约风险原因表` DISABLE KEYS */;
-INSERT INTO `违约风险原因表` (`违约原因编号`, `违约原因`, `是否启用`) VALUES
-	('1', '6 个月内，交易对手技术性或资金等原因，给当天结算带来头寸缺口 2 次以上', 1),
-	('2', '未能按照合约规定支付或延期支付利息，本金或其他交付义务（不包括在宽限期内延期支付）', 1),
-	('3', '6 个月内因各种原因导致成交后撤单 2 次以上', 1),
-	('4', '关联违约：如果集团（内部联系较紧密的集团）或集团内任一公司（较重要的子公司，一旦发生违约会对整个集团造成较大影响的）发生违约，可视情况作为集团内所有成员违约的触发条件', 1),
-	('5', '发生消极债务置换：债务人提供给债权人新的或重组的债务，或新的证券组合、现金或资产低于原有金融义务；或为了债务人未来避免发生破产或拖欠还款而进行的展期或重组', 1),
-	('6', '申请破产保护，发生法律接管，或者处于类似的破产保护状态', 1),
-	('7', '在其他金融机构违约（包括不限于：人行征信记录中显示贷款分类状态不良类情况，逾期超过 90 天等），或外部评级显示为违约级别', 1);
-/*!40000 ALTER TABLE `违约风险原因表` ENABLE KEYS */;
+-- ���ڵ�����  com.ΥԼ����ԭ��� �����ݣ�~7 rows (��Լ)
+DELETE FROM `ΥԼ����ԭ���`;
+/*!40000 ALTER TABLE `ΥԼ����ԭ���` DISABLE KEYS */;
+INSERT INTO `ΥԼ����ԭ���` (`ΥԼԭ����`, `ΥԼԭ��`, `�Ƿ�����`) VALUES
+	('1', '6 �����ڣ����׶��ּ����Ի��ʽ��ԭ�򣬸�����������ͷ��ȱ�� 2 ������', 1),
+	('2', 'δ�ܰ��պ�Լ�涨֧��������֧����Ϣ������������������񣨲������ڿ�����������֧����', 1),
+	('3', '6 �����������ԭ���³ɽ��󳷵� 2 ������', 1),
+	('4', '����ΥԼ��������ţ��ڲ���ϵ�Ͻ��ܵļ��ţ���������һ��˾������Ҫ���ӹ�˾��һ������ΥԼ�������������ɽϴ�Ӱ��ģ�����ΥԼ�����������Ϊ���������г�ԱΥԼ�Ĵ�������', 1),
+	('5', '��������ծ���û���ծ�����ṩ��ծȨ���µĻ������ծ�񣬻��µ�֤ȯ��ϡ��ֽ���ʲ�����ԭ�н������񣻻�Ϊ��ծ����δ�����ⷢ���Ʋ�����Ƿ��������е�չ�ڻ�����', 1),
+	('6', '�����Ʋ��������������ɽӹܣ����ߴ������Ƶ��Ʋ�����״̬', 1),
+	('7', '���������ڻ���ΥԼ�����������ڣ��������ż�¼����ʾ�������״̬��������������ڳ��� 90 ��ȣ������ⲿ������ʾΪΥԼ����', 1);
+/*!40000 ALTER TABLE `ΥԼ����ԭ���` ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `违约认定人工审核表`;
-CREATE TABLE IF NOT EXISTS `违约认定人工审核表` (
-  `违约审核编号` varchar(16) NOT NULL,
-  `客户号` varchar(16) NOT NULL,
-  `违约原因编号` varchar(16) NOT NULL,
-  `严重程度` varchar(2) NOT NULL,
-  `认定人` varchar(128) NOT NULL,
-  `认定申请时间` datetime DEFAULT NULL,
-  `外部最新等级` varchar(4) NOT NULL,
-  `备注` varchar(512) DEFAULT NULL,
-  `审核状态` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`违约审核编号`),
-  KEY `客户号` (`客户号`),
-  KEY `违约原因编号` (`违约原因编号`),
-  FOREIGN KEY (`客户号`) REFERENCES `客户表` (`客户号`),
-  FOREIGN KEY (`违约原因编号`) REFERENCES `违约风险原因表` (`违约原因编号`)
+DROP TABLE IF EXISTS `ΥԼ�϶��˹���˱�`;
+CREATE TABLE IF NOT EXISTS `ΥԼ�϶��˹���˱�` (
+  `ΥԼ��˱��` varchar(16) NOT NULL,
+  `�ͻ���` varchar(16) NOT NULL,
+  `ΥԼԭ����` varchar(16) NOT NULL,
+  `���س̶�` varchar(2) NOT NULL,
+  `�϶���` varchar(128) NOT NULL,
+  `�϶�����ʱ��` datetime DEFAULT NULL,
+  `�ⲿ���µȼ�` varchar(4) NOT NULL,
+  `��ע` varchar(512) DEFAULT NULL,
+  `���״̬` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`ΥԼ��˱��`),
+  KEY `�ͻ���` (`�ͻ���`),
+  KEY `ΥԼԭ����` (`ΥԼԭ����`),
+  FOREIGN KEY (`�ͻ���`) REFERENCES `�ͻ���` (`�ͻ���`),
+  FOREIGN KEY (`ΥԼԭ����`) REFERENCES `ΥԼ����ԭ���` (`ΥԼԭ����`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  com.违约认定人工审核表 的数据：~1 rows (大约)
-DELETE FROM `违约认定人工审核表`;
-/*!40000 ALTER TABLE `违约认定人工审核表` DISABLE KEYS */;
-INSERT INTO `违约认定人工审核表` (`违约审核编号`, `客户号`, `违约原因编号`, `严重程度`, `认定人`, `认定申请时间`, `外部最新等级`, `备注`, `审核状态`) VALUES
-	('aaaaa', '1', '1', 'a', 'aa', '2022-06-29 16:02:38', '1', 'aa', '审核通过');
-/*!40000 ALTER TABLE `违约认定人工审核表` ENABLE KEYS */;
+-- ���ڵ�����  com.ΥԼ�϶��˹���˱� �����ݣ�~1 rows (��Լ)
+DELETE FROM `ΥԼ�϶��˹���˱�`;
+/*!40000 ALTER TABLE `ΥԼ�϶��˹���˱�` DISABLE KEYS */;
+INSERT INTO `ΥԼ�϶��˹���˱�` (`ΥԼ��˱��`, `�ͻ���`, `ΥԼԭ����`, `���س̶�`, `�϶���`, `�϶�����ʱ��`, `�ⲿ���µȼ�`, `��ע`, `���״̬`) VALUES
+	('aaaaa', '1', '1', 'a', 'aa', '2022-06-29 16:02:38', '1', 'aa', '���ͨ��');
+/*!40000 ALTER TABLE `ΥԼ�϶��˹���˱�` ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `重生原因表`;
-CREATE TABLE IF NOT EXISTS `重生原因表` (
-  `重生原因编号` varchar(16) NOT NULL,
-  `重生原因` varchar(512) NOT NULL,
-  PRIMARY KEY (`重生原因编号`)
+DROP TABLE IF EXISTS `����ԭ���`;
+CREATE TABLE IF NOT EXISTS `����ԭ���` (
+  `����ԭ����` varchar(16) NOT NULL,
+  `����ԭ��` varchar(512) NOT NULL,
+  PRIMARY KEY (`����ԭ����`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  com.重生原因表 的数据：~6 rows (大约)
-DELETE FROM `重生原因表`;
-/*!40000 ALTER TABLE `重生原因表` DISABLE KEYS */;
-INSERT INTO `重生原因表` (`重生原因编号`, `重生原因`) VALUES
-	('1', '正常结算后解除'),
-	('2', '在其他金融机构违约解除，或外部评级显示为非违约级别'),
-	('3', '计提比例小于设置界限'),
-	('4', '连续 12 个月内按时支付本金和利息'),
-	('5', '客户的还款意愿和还款能力明显好转，已偿付各项逾期本金、逾期利息和其他费用（包括罚息等），且连续 12 个月内按时支付本金、利息'),
-	('6', '导致违约的关联集团内其他发生违约的客户已经违约重生，解除关联成员的违约设定');
-/*!40000 ALTER TABLE `重生原因表` ENABLE KEYS */;
+-- ���ڵ�����  com.����ԭ��� �����ݣ�~6 rows (��Լ)
+DELETE FROM `����ԭ���`;
+/*!40000 ALTER TABLE `����ԭ���` DISABLE KEYS */;
+INSERT INTO `����ԭ���` (`����ԭ����`, `����ԭ��`) VALUES
+	('1', '�����������'),
+	('2', '���������ڻ���ΥԼ��������ⲿ������ʾΪ��ΥԼ����'),
+	('3', '�������С�����ý���'),
+	('4', '���� 12 �����ڰ�ʱ֧���������Ϣ'),
+	('5', '�ͻ��Ļ�����Ը�ͻ����������Ժ�ת���ѳ����������ڱ���������Ϣ���������ã�������Ϣ�ȣ��������� 12 �����ڰ�ʱ֧��������Ϣ'),
+	('6', '����ΥԼ�Ĺ�����������������ΥԼ�Ŀͻ��Ѿ�ΥԼ���������������Ա��ΥԼ�趨');
+/*!40000 ALTER TABLE `����ԭ���` ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `重生人工审核表`;
-CREATE TABLE IF NOT EXISTS `重生人工审核表` (
-  `重生审核编号` varchar(16) NOT NULL,
-  `重生原因编号` varchar(16) NOT NULL,
-  `违约审核编号` varchar(16) NOT NULL,
-  `重生申请时间` datetime DEFAULT NULL,
-  `审核状态` varchar(20) DEFAULT NULL,
-  `负责人` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`重生审核编号`),
-  KEY `重生原因编号` (`重生原因编号`),
-  KEY `违约审核编号` (`违约审核编号`),
-  FOREIGN KEY (`重生原因编号`) REFERENCES `重生原因表` (`重生原因编号`),
-  FOREIGN KEY (`违约审核编号`) REFERENCES `违约认定人工审核表` (`违约审核编号`)
+DROP TABLE IF EXISTS `�����˹���˱�`;
+CREATE TABLE IF NOT EXISTS `�����˹���˱�` (
+  `������˱��` varchar(16) NOT NULL,
+  `����ԭ����` varchar(16) NOT NULL,
+  `ΥԼ��˱��` varchar(16) NOT NULL,
+  `��������ʱ��` datetime DEFAULT NULL,
+  `���״̬` varchar(20) DEFAULT NULL,
+  `������` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`������˱��`),
+  KEY `����ԭ����` (`����ԭ����`),
+  KEY `ΥԼ��˱��` (`ΥԼ��˱��`),
+  FOREIGN KEY (`����ԭ����`) REFERENCES `����ԭ���` (`����ԭ����`),
+  FOREIGN KEY (`ΥԼ��˱��`) REFERENCES `ΥԼ�϶��˹���˱�` (`ΥԼ��˱��`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  com.重生人工审核表 的数据：~1 rows (大约)
-DELETE FROM `重生人工审核表`;
-/*!40000 ALTER TABLE `重生人工审核表` DISABLE KEYS */;
-INSERT INTO `重生人工审核表` (`重生审核编号`, `重生原因编号`, `违约审核编号`, `重生申请时间`, `审核状态`, `负责人`) VALUES
-	('aaaaaa', '2', 'aaaaa', '2022-06-29 16:09:03', '审核通过', '1');
-/*!40000 ALTER TABLE `重生人工审核表` ENABLE KEYS */;
+-- ���ڵ�����  com.�����˹���˱� �����ݣ�~1 rows (��Լ)
+DELETE FROM `�����˹���˱�`;
+/*!40000 ALTER TABLE `�����˹���˱�` DISABLE KEYS */;
+INSERT INTO `�����˹���˱�` (`������˱��`, `����ԭ����`, `ΥԼ��˱��`, `��������ʱ��`, `���״̬`, `������`) VALUES
+	('aaaaaa', '2', 'aaaaa', '2022-06-29 16:09:03', '���ͨ��', '1');
+/*!40000 ALTER TABLE `�����˹���˱�` ENABLE KEYS */;
 
--- 触发器：
--- 1.插入违约认定人工审核表时，生成认定申请时间，审核状态（待审核）
--- Create Trigger `违约认定人工审核_1`
+-- ��������
+-- 1.����ΥԼ�϶��˹���˱�ʱ�������϶�����ʱ�䣬���״̬������ˣ�
+-- Create Trigger `ΥԼ�϶��˹����_1`
 -- 	After Insert
--- 	ON `违约认定人工审核表`
+-- 	ON `ΥԼ�϶��˹���˱�`
 -- AS
--- 	Update `违约认定人工审核表`
--- 	Set `审核状态`='待审核',`认定申请时间`=(Select GETDATE())
--- 	Where `违约审核编号`=(Select `违约审核编号` From inserted);
+-- 	Update `ΥԼ�϶��˹���˱�`
+-- 	Set `���״̬`='�����',`�϶�����ʱ��`=(Select GETDATE())
+-- 	Where `ΥԼ��˱��`=(Select `ΥԼ��˱��` From inserted);
 
-DROP TRIGGER IF EXISTS `违约认定人工审核表_before_insert`;
+DROP TRIGGER IF EXISTS `ΥԼ�϶��˹���˱�_before_insert`;
 SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 DELIMITER //
-CREATE TRIGGER `违约认定人工审核表_before_insert` BEFORE INSERT ON `违约认定人工审核表` FOR EACH ROW BEGIN
-	Set NEW.`审核状态`='待审核',NEW.`认定申请时间`=(Select NOW());
+CREATE TRIGGER `ΥԼ�϶��˹���˱�_before_insert` BEFORE INSERT ON `ΥԼ�϶��˹���˱�` FOR EACH ROW BEGIN
+	Set NEW.`���״̬`='�����',NEW.`�϶�����ʱ��`=(Select NOW());
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
 
--- 2.插入重生人工审核表时，生成重生申请时间，审核状态（待审核）
--- Create Trigger 重生人工审核_1
--- 	ON 重生人工审核表
+-- 2.���������˹���˱�ʱ��������������ʱ�䣬���״̬������ˣ�
+-- Create Trigger �����˹����_1
+-- 	ON �����˹���˱�
 -- 	After Insert
 -- AS
--- 	Update 重生人工审核表
--- 	Set 审核状态='待审核',重生申请时间=(Select GETDATE())
--- 	Where 重生审核编号=(Select 重生审核编号 From inserted);
+-- 	Update �����˹���˱�
+-- 	Set ���״̬='�����',��������ʱ��=(Select GETDATE())
+-- 	Where ������˱��=(Select ������˱�� From inserted);
 
-DROP TRIGGER IF EXISTS `重生人工审核表_before_insert`;
+DROP TRIGGER IF EXISTS `�����˹���˱�_before_insert`;
 SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 DELIMITER //
-CREATE TRIGGER `重生人工审核表_before_insert` BEFORE INSERT ON `重生人工审核表` FOR EACH ROW BEGIN
-	Set NEW.`审核状态`='待审核',NEW.`重生申请时间`=NOW();
+CREATE TRIGGER `�����˹���˱�_before_insert` BEFORE INSERT ON `�����˹���˱�` FOR EACH ROW BEGIN
+	Set NEW.`���״̬`='�����',NEW.`��������ʱ��`=NOW();
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
 
--- 3.当违约认定通过时，将违约情况修改为是
--- Create Trigger 违约认定人工审核_2
--- 	ON 违约认定人工审核表
+-- 3.��ΥԼ�϶�ͨ��ʱ����ΥԼ����޸�Ϊ��
+-- Create Trigger ΥԼ�϶��˹����_2
+-- 	ON ΥԼ�϶��˹���˱�
 -- 	After Update
 -- AS
--- 	IF Update(审核状态)
--- 		IF (Select 审核状态 From inserted) = '审核通过'
--- 			Update 客户
--- 			Set 违约情况=1
--- 			Where 客户号=(Select 客户号 From inserted);
+-- 	IF Update(���״̬)
+-- 		IF (Select ���״̬ From inserted) = '���ͨ��'
+-- 			Update �ͻ�
+-- 			Set ΥԼ���=1
+-- 			Where �ͻ���=(Select �ͻ��� From inserted);
 
-DROP TRIGGER IF EXISTS `违约认定人工审核表_after_update`;
+DROP TRIGGER IF EXISTS `ΥԼ�϶��˹���˱�_after_update`;
 SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 DELIMITER //
-CREATE TRIGGER `违约认定人工审核表_after_update` AFTER UPDATE ON `违约认定人工审核表` FOR EACH ROW BEGIN
-	Update `客户表`
-		SET `违约情况`=1
-		WHERE `客户号`=NEW.`客户号` AND NEW.`审核状态` = '审核通过';
+CREATE TRIGGER `ΥԼ�϶��˹���˱�_after_update` AFTER UPDATE ON `ΥԼ�϶��˹���˱�` FOR EACH ROW BEGIN
+	Update `�ͻ���`
+		SET `ΥԼ���`=1
+		WHERE `�ͻ���`=NEW.`�ͻ���` AND NEW.`���״̬` = '���ͨ��';
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
 
--- 4.当重生审核通过，将违约情况修改为否
--- Create Trigger 重生人工审核_2
--- 	ON 重生人工审核表
+-- 4.���������ͨ������ΥԼ����޸�Ϊ��
+-- Create Trigger �����˹����_2
+-- 	ON �����˹���˱�
 -- 	After Update
 -- AS
--- 	IF Update(审核状态)
--- 		IF (Select 审核状态 From inserted) = '审核通过'
--- 			Update 客户
--- 			Set 违约情况=0
--- 			Where 客户号=(Select 客户号 From inserted);
+-- 	IF Update(���״̬)
+-- 		IF (Select ���״̬ From inserted) = '���ͨ��'
+-- 			Update �ͻ�
+-- 			Set ΥԼ���=0
+-- 			Where �ͻ���=(Select �ͻ��� From inserted);
 
-DROP TRIGGER IF EXISTS `重生人工审核表_after_update`;
+DROP TRIGGER IF EXISTS `�����˹���˱�_after_update`;
 SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 DELIMITER //
-CREATE TRIGGER `重生人工审核表_after_update` AFTER UPDATE ON `重生人工审核表` FOR EACH ROW BEGIN
-		UPDATE `客户表`
-		Set `违约情况`=0
-		Where `客户号`=(Select `客户号` FROM `违约认定人工审核表` WHERE `违约审核编号`= NEW.`违约审核编号` ) AND NEW.`审核状态` = '审核通过';
+CREATE TRIGGER `�����˹���˱�_after_update` AFTER UPDATE ON `�����˹���˱�` FOR EACH ROW BEGIN
+		UPDATE `�ͻ���`
+		Set `ΥԼ���`=0
+		Where `�ͻ���`=(Select `�ͻ���` FROM `ΥԼ�϶��˹���˱�` WHERE `ΥԼ��˱��`= NEW.`ΥԼ��˱��` ) AND NEW.`���״̬` = '���ͨ��';
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
 
--- 存储过程：
--- 1.违约重生
--- Create Procedure 违约重生
--- 	@客户号_flag nvarchar(16)
+-- �洢���̣�
+-- 1.ΥԼ����
+-- Create Procedure ΥԼ����
+-- 	@�ͻ���_flag nvarchar(16)
 -- AS
--- 	Select 客户名,违约原因 AS 认为违约原因,严重程度,认定人,认定申请时间,外部最新等级
--- 	From 客户表,违约风险原因表,违约认定人工审核表
--- 	Where 客户表.客户号=@客户号_flag AND 客户表.客户号=违约认定人工审核表.客户号 AND 违约认定人工审核表.违约原因编号=违约风险原因表.违约原因编号
+-- 	Select �ͻ���,ΥԼԭ�� AS ��ΪΥԼԭ��,���س̶�,�϶���,�϶�����ʱ��,�ⲿ���µȼ�
+-- 	From �ͻ���,ΥԼ����ԭ���,ΥԼ�϶��˹���˱�
+-- 	Where �ͻ���.�ͻ���=@�ͻ���_flag AND �ͻ���.�ͻ���=ΥԼ�϶��˹���˱�.�ͻ��� AND ΥԼ�϶��˹���˱�.ΥԼԭ����=ΥԼ����ԭ���.ΥԼԭ����
 
 
 
--- 视图：
+-- ��ͼ��
 
--- 1.违约认定审核总信息
-Create View `V_违约认定审核总信息`
-AS Select `违约审核编号`,`客户表`.`客户号` AS `客户号`,`客户名`,`性别`,`区域`,`行业`,`集团`,`违约原因`,`认定人`,`认定申请时间`,`严重程度`,`外部最新等级`,`审核状态`,`备注`
-From `客户表`,`违约认定人工审核表`,`违约风险原因表`
-Where `客户表`.`客户号`=`违约认定人工审核表`.`客户号` AND `违约认定人工审核表`.`违约原因编号`=`违约风险原因表`.`违约原因编号`;
+-- 1.ΥԼ�϶��������Ϣ
+Create View `V_ΥԼ�϶��������Ϣ`
+AS Select `ΥԼ��˱��`,`�ͻ���`.`�ͻ���` AS `�ͻ���`,`�ͻ���`,`�Ա�`,`����`,`��ҵ`,`����`,`ΥԼԭ��`,`�϶���`,`�϶�����ʱ��`,`���س̶�`,`�ⲿ���µȼ�`,`���״̬`,`��ע`
+From `�ͻ���`,`ΥԼ�϶��˹���˱�`,`ΥԼ����ԭ���`
+Where `�ͻ���`.`�ͻ���`=`ΥԼ�϶��˹���˱�`.`�ͻ���` AND `ΥԼ�϶��˹���˱�`.`ΥԼԭ����`=`ΥԼ����ԭ���`.`ΥԼԭ����`;
 
--- 2.重生审核
-Create View `V_重生审核`
-AS Select `重生审核编号`,`客户表`.`客户号` AS `客户号`,`客户名`,`违约原因`,`严重程度`,`外部最新等级`,`认定人`,`认定申请时间`,`重生原因`
-From `客户表`,`违约认定人工审核表`,`违约风险原因表`,`重生人工审核表`,`重生原因表`
-Where `重生人工审核表`.`违约审核编号`=`违约认定人工审核表`.`违约审核编号` AND `重生人工审核表`.`审核状态`='待审核' AND `重生人工审核表`.`重生原因编号`=`重生原因表`.`重生原因编号` AND `客户表`.`客户号`=`违约认定人工审核表`.`客户号` AND `违约认定人工审核表`.`违约原因编号`=`违约风险原因表`.`违约原因编号`;
+-- 2.�������
+Create View `V_�������`
+AS Select `������˱��`,`�ͻ���`.`�ͻ���` AS `�ͻ���`,`�ͻ���`,`ΥԼԭ��`,`���س̶�`,`�ⲿ���µȼ�`,`�϶���`,`�϶�����ʱ��`,`����ԭ��`
+From `�ͻ���`,`ΥԼ�϶��˹���˱�`,`ΥԼ����ԭ���`,`�����˹���˱�`,`����ԭ���`
+Where `�����˹���˱�`.`ΥԼ��˱��`=`ΥԼ�϶��˹���˱�`.`ΥԼ��˱��` AND `�����˹���˱�`.`���״̬`='�����' AND `�����˹���˱�`.`����ԭ����`=`����ԭ���`.`����ԭ����` AND `�ͻ���`.`�ͻ���`=`ΥԼ�϶��˹���˱�`.`�ͻ���` AND `ΥԼ�϶��˹���˱�`.`ΥԼԭ����`=`ΥԼ����ԭ���`.`ΥԼԭ����`;
 
--- 3.V_已启用的违约风险原因
-Create View `已启用的违约原因`
-AS Select `违约原因编号`,`违约原因`
-From `违约风险原因表`
-Where `是否启用`=1;
+-- 3.V_�����õ�ΥԼ����ԭ��
+Create View `�����õ�ΥԼԭ��`
+AS Select `ΥԼԭ����`,`ΥԼԭ��`
+From `ΥԼ����ԭ���`
+Where `�Ƿ�����`=1;
 
 
 
--- 6.违约统计
--- Where YEAR(认定申请时间)=某年
+-- 6.ΥԼͳ��
+-- Where YEAR(�϶�����ʱ��)=ĳ��
 
 
