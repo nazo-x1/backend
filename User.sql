@@ -157,7 +157,7 @@ DROP TRIGGER IF EXISTS `重生人工审核表_before_insert`;
 SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 DELIMITER //
 CREATE TRIGGER `重生人工审核表_before_insert` BEFORE INSERT ON `重生人工审核表` FOR EACH ROW BEGIN
-	Set NEW.审核状态='待审核',NEW.重生申请时间=NOW();
+	Set NEW.`审核状态`='待审核',NEW.`重生申请时间`=NOW();
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -177,7 +177,7 @@ DROP TRIGGER IF EXISTS `违约认定人工审核表_after_update`;
 SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 DELIMITER //
 CREATE TRIGGER `违约认定人工审核表_after_update` AFTER UPDATE ON `违约认定人工审核表` FOR EACH ROW BEGIN
-	Update 客户表
+	Update `客户表`
 		SET 违约情况=1
 		WHERE `客户号`=NEW.`客户号` AND NEW.审核状态 = '审核通过';
 END//
@@ -199,9 +199,9 @@ DROP TRIGGER IF EXISTS `重生人工审核表_after_update`;
 SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 DELIMITER //
 CREATE TRIGGER `重生人工审核表_after_update` AFTER UPDATE ON `重生人工审核表` FOR EACH ROW BEGIN
-		UPDATE 客户表
-		Set 违约情况=0
-		Where 客户号=(Select 客户号 FROM `违约认定人工审核表` WHERE `违约审核编号`= NEW.违约审核编号 ) AND NEW.审核状态 = '审核通过';
+		UPDATE `客户表`
+		Set `违约情况`=0
+		Where `客户号`=(Select `客户号` FROM `违约认定人工审核表` WHERE `违约审核编号`= NEW.`违约审核编号` ) AND NEW.`审核状态` = '审核通过';
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -220,22 +220,22 @@ SET SQL_MODE=@OLDTMP_SQL_MODE;
 -- 视图：
 
 -- 1.违约认定审核总信息
-Create View V_违约认定审核总信息
-AS Select 违约审核编号,客户表.客户号 AS 客户号,客户名,性别,区域,行业,集团,违约原因,认定人,认定申请时间,严重程度,外部最新等级,审核状态,备注
-From 客户表,违约认定人工审核表,违约风险原因表
-Where 客户表.客户号=违约认定人工审核表.客户号 AND 违约认定人工审核表.违约原因编号=违约风险原因表.违约原因编号;
+Create View `V_违约认定审核总信息`
+AS Select `违约审核编号`,`客户表`.`客户号` AS `客户号`,`客户名`,`性别`,`区域`,`行业`,`集团`,`违约原因`,`认定人`,`认定申请时间`,`严重程度`,`外部最新等级`,`审核状态`,`备注`
+From `客户表`,`违约认定人工审核表`,`违约风险原因表`
+Where `客户表`.`客户号`=`违约认定人工审核表`.`客户号` AND `违约认定人工审核表`.`违约原因编号`=`违约风险原因表`.`违约原因编号`;
 
 -- 2.重生审核
-Create View V_重生审核
-AS Select 重生审核编号,客户表.客户号 AS 客户号,客户名,违约原因,严重程度,外部最新等级,认定人,认定申请时间,重生原因
-From 客户表,违约认定人工审核表,违约风险原因表,重生人工审核表,重生原因表
-Where 重生人工审核表.违约审核编号=违约认定人工审核表.违约审核编号 AND 重生人工审核表.审核状态='待审核' AND 重生人工审核表.重生原因编号=重生原因表.重生原因编号 AND 客户表.客户号=违约认定人工审核表.客户号 AND 违约认定人工审核表.违约原因编号=违约风险原因表.违约原因编号;
+Create View `V_重生审核`
+AS Select `重生审核编号`,`客户表`.`客户号` AS `客户号`,`客户名`,`违约原因`,`严重程度`,`外部最新等级`,`认定人`,`认定申请时间`,`重生原因`
+From `客户表`,`违约认定人工审核表`,`违约风险原因表`,`重生人工审核表`,`重生原因表`
+Where `重生人工审核表`.`违约审核编号`=`违约认定人工审核表`.`违约审核编号` AND `重生人工审核表`.`审核状态`='待审核' AND `重生人工审核表`.`重生原因编号`=`重生原因表`.`重生原因编号` AND `客户表`.`客户号`=`违约认定人工审核表`.`客户号` AND `违约认定人工审核表`.`违约原因编号`=`违约风险原因表`.`违约原因编号`;
 
 -- 3.V_已启用的违约风险原因
-Create View 已启用的违约原因
-AS Select 违约原因编号,违约原因
-From 违约风险原因表
-Where 是否启用=1;
+Create View `已启用的违约原因`
+AS Select `违约原因编号`,`违约原因`
+From `违约风险原因表`
+Where `是否启用`=1;
 
 
 
