@@ -1,4 +1,6 @@
-CREATE database com
+CREATE DATABASE IF NOT EXISTS `com` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
+USE `com`;
+
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(16) NOT NULL,
