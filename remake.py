@@ -3,7 +3,7 @@ import jwt
 import uuid
 import os
 
-from database import User, V_违约认定审核信息查询, db, V_违约重生审核, to_json, 重生人工审核表, 重生原因表
+from database import User, V_违约认定审核信息查询, db, V_违约重生审核, to_json, 违约认定人工审核表, 重生人工审核表, 重生原因表
 
 remake = Blueprint('remake', __name__, url_prefix='/remake')
 
@@ -35,9 +35,9 @@ def showReasons():
 @remake.route('/apply', methods=['POST'])
 def new():
     remakeReason = request.form.get("reason", type=int, default=None)
-    weiyueid = request.form.get("id", type=int, default=None)
+    weiyueid = request.form.get("id", type=str, default=None)
     try:
-        record = V_违约认定审核信息查询.query.get(weiyueid)
+        record = 违约认定人工审核表.query.get(weiyueid)
     except Exception as e:
         return {'status': '审核表不存在'}
 
@@ -55,14 +55,21 @@ def new():
     return {'status': f'success'}
 
 
-@remake.route('/wait_records', methods=['POST'])
-def showRemakeList():
-    try:
-        reasons = V_违约重生审核.query.all()
-    except Exception as e:
-        print(e)
-        return {'status': f'数据库连接失败,请联系管理员!'}
-
+@remake.route('/records', methods=['POST'])
+def showRemakeRecords():
+    passQuery = request.form.get("passed", type=str, default=None)
+    if not passQuery:
+        try:
+            reasons = 重生人工审核表.query.all()
+        except Exception as e:
+            print(e)
+            return {'status': f'数据库连接失败,请联系管理员!'}
+    else:
+        try:
+            reasons = 重生人工审核表.query.filter_by(审核状态=passQuery)
+        except Exception as e:
+            print(e)
+            return {'status': f'数据库连接失败,请联系管理员!'}
     return jsonify(to_json(reasons))
 
 
@@ -84,7 +91,7 @@ def getApplyForm(ApplyFormid):
 @remake.route('/verify', methods=['POST'])
 def verify():
     passed = request.form.get("passed", type=str, default='').lower()
-    id = request.form.get("id", type=int, default=None)
+    id = request.form.get("id", type=str, default=None)
 
     checkResult, applyForm = getApplyForm(id)
     if not(checkResult['status'] == 'success'):

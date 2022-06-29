@@ -3,7 +3,7 @@ import jwt
 import uuid
 import os
 
-from database import V_已启用的违约原因, V_违约认定审核信息查询, db, to_json, User, 违约认定人工审核表, 客户表, 违约风险原因表
+from database import db, to_json, User, 违约认定人工审核表, 客户表, 违约风险原因表
 
 weiyue = Blueprint('weiyue', __name__, url_prefix='/weiyue')
 
@@ -53,7 +53,7 @@ def getApplyForm(ApplyFormid):
 
 @weiyue.route('/apply', methods=['POST'])
 def new():
-    customid = request.form.get("customid", type=int, default=None)
+    customid = request.form.get("customid", type=str, default=None)
     outLevel = request.form.get("outLevel", type=int, default='0')
     reason = request.form.get("reason", type=int, default=None)
     dangerLevel = request.form.get("dangerLevel", type=int, default='1')
@@ -108,35 +108,66 @@ def show():
     return jsonify(to_json(customs))
 
 
-@weiyue.route('/enabled_reason', methods=['POST'])
-def en_reason():
-    try:
-        avaiblereasons = V_已启用的违约原因.query.all()
-    except Exception as e:
-        print(e)
-        return {'status': f'数据库连接失败,请联系管理员!'}
+@weiyue.route('/reason', methods=['POST'])
+def reason():
+    enable = request.form.get("enable", type=bool, default=None)
+    if enable is None:
+        try:
+            reasons = 违约风险原因表.query.all()
+        except Exception as e:
+            print(e)
+            return {'status': f'数据库连接失败,请联系管理员!'}
+    else:
+        try:
+            reasons = 违约风险原因表.query.filter_by(是否启用=enable)
+        except Exception as e:
+            print(e)
+            return {'status': f'数据库连接失败,请联系管理员!'}
 
-    return jsonify(to_json(avaiblereasons))
+    return jsonify(to_json(reasons))
 
+@weiyue.route('/change_reason', methods=['POST'])
+def cgreason():
+    enable = request.form.get("enable", type=int, default=None)
+    reasonid = request.form.get("reasonid", type=int, default=None)
+    if enable is None:
+        try:
+            reasons = 违约风险原因表.query.all()
+        except Exception as e:
+            print(e)
+            return {'status': f'数据库连接失败,请联系管理员!'}
+    else:
+        try:
+            reasons = 违约风险原因表.query.get(reasonid)
+            setattr(reasons, '是否启用', enable)
+            try:
+                db.session.update(reasons)
+                db.session.commit()
+            except Exception as e:
+                print(e)
+                return {'status': f'数据库连接失败,请联系管理员!'}
+        except Exception as e:
+            print(e)
+            return {'status': '没有这个风险'}
 
-@weiyue.route('/all_reason', methods=['POST'])
-def all_reason():
-    try:
-        allreasons = 违约风险原因表.query.all()
-    except Exception as e:
-        print(e)
-        return {'status': f'数据库连接失败,请联系管理员!'}
-
-    return jsonify(to_json(allreasons))
+    return jsonify(to_json(reasons))
 
 
 @weiyue.route('/records', methods=['POST'])
-def showWeiyueList():
-    try:
-        records = V_违约认定审核信息查询.query.all()
-    except Exception as e:
-        print(e)
-        return {'status': f'数据库连接失败,请联系管理员!'}
+def showWeiyueRecords():
+    passQuery = request.form.get("passed", type=str, default=None)
+    if not passQuery:
+        try:
+            records = 违约认定人工审核表.query.all()
+        except Exception as e:
+            print(e)
+            return {'status': f'数据库连接失败,请联系管理员!'}
+    else:
+        try:
+            records = 违约认定人工审核表.query.filter_by(审核状态=passQuery)
+        except Exception as e:
+            print(e)
+            return {'status': f'数据库连接失败,请联系管理员!'}
 
     return jsonify(to_json(records))
 

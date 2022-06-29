@@ -22,7 +22,7 @@ def new():
 
 
     try:
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(是否启用=username).first()
         if user is not None:
             return {'status': 'username already used'}
     except Exception as e:
