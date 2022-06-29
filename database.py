@@ -164,29 +164,10 @@ class 重生原因表(db.Model):
     db.dobule_to_dict = dobule_to_dict
 
 
-class V_已启用的违约原因(db.Model):
-    违约原因编号 = db.Column(db.String(16), primary_key=True)
-    违约原因 = db.Column(db.String(512))
-
-    def to_dict(self):
-        model_dict = dict(self.__dict__)
-        del model_dict['_sa_instance_state']
-        return model_dict
-
-    def dobule_to_dict(self):
-        result = {}
-        for key in self.__mapper__.c.keys():
-            if getattr(self, key) is not None:
-                result[key] = str(getattr(self, key))
-            else:
-                result[key] = getattr(self, key)
-        return result
-    db.to_dict = to_dict
-    db.dobule_to_dict = dobule_to_dict
-
-
-class V_违约重生审核(db.Model):
-    客户名 = db.Column(db.String(128), primary_key=True)
+class V_重生审核(db.Model):
+    重生审核编号 = db.Column(db.String(16), primary_key=True)
+    客户号 = db.Column(db.String(16))
+    客户名 = db.Column(db.String(128))
     违约原因 = db.Column(db.String(512))
     严重程度 = db.Column(db.String(2))
     外部最新等级 = db.Column(db.String(2))
@@ -211,8 +192,10 @@ class V_违约重生审核(db.Model):
     db.dobule_to_dict = dobule_to_dict
 
 
-class V_违约认定审核信息查询(db.Model):
-    客户名 = db.Column(db.String(128), primary_key=True)
+class V_违约认定审核总信息(db.Model):
+    违约审核编号 = db.Column(db.String(16),primary_key=True)
+    客户号 = db.Column(db.String(16))
+    客户名 = db.Column(db.String(128))
     性别 = db.Column(db.String(2))
     区域 = db.Column(db.String(50))
     行业 = db.Column(db.String(50))
