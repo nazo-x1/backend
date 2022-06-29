@@ -1,3 +1,4 @@
+CREATE database com
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(16) NOT NULL,
