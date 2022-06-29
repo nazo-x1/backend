@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `重生人工审核表` (
   `违约审核编号` varchar(16) NOT NULL,
   `重生申请时间` datetime DEFAULT NULL,
   `审核状态` varchar(20) DEFAULT NULL,
-  `负责人` varchar(128) NOT NULL,
+  `负责人` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`重生审核编号`),
   KEY `重生原因编号` (`重生原因编号`),
   KEY `违约审核编号` (`违约审核编号`),

@@ -55,7 +55,7 @@ def getApplyForm(ApplyFormid):
 def new():
     customid = request.form.get("customid", type=str, default=None)
     outLevel = request.form.get("outLevel", type=int, default='0')
-    reason = request.form.get("reason", type=int, default=None)
+    reasonid = request.form.get("reasonid", type=int, default=None)
     dangerLevel = request.form.get("dangerLevel", type=int, default='1')
     info = request.form.get("info", type=str, default=None)
 
@@ -63,7 +63,7 @@ def new():
     if not(checkResult['status'] == 'success'):
         return checkResult
 
-    applyForm = 违约认定人工审核表(违约审核编号=os.urandom(8).hex(),客户号=customid, 违约原因编号=reason,
+    applyForm = 违约认定人工审核表(违约审核编号=os.urandom(8).hex(),客户号=customid, 违约原因编号=reasonid,
                           严重程度=dangerLevel, 认定人="", 外部最新等级=outLevel, 备注=info)
     try:
         db.session.add(applyForm)

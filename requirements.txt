@@ -1,0 +1,5 @@
+flask
+Flask_SQLAlchemy
+PyJWT
+SQLAlchemy
+cryptography
