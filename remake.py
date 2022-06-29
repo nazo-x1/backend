@@ -24,6 +24,7 @@ def verify_jwt():
 @remake.route('/reason', methods=['POST'])
 def showReasons():
     try:
+        db.session.flush()
         reasons = 重生原因表.query.all()
     except Exception as e:
         print(e)
@@ -60,12 +61,14 @@ def showRemakeRecords():
     passQuery = request.form.get("passed", type=str, default=None)
     if not passQuery:
         try:
+            db.session.flush()
             records = V_重生审核.query.all()
         except Exception as e:
             print(e)
             return {'status': f'数据库连接失败,请联系管理员!'}
     else:
         try:
+            db.session.flush()
             records = V_重生审核.query.filter_by(审核状态=passQuery)
         except Exception as e:
             print(e)
@@ -102,9 +105,19 @@ def verify():
     setattr(applyForm, '负责人', g.user.username)
     try:
         # db.session.update(applyForm)
-        db.session.commit()
+        try:
+            db.session.update(applyForm)
+        except:
+            pass
+        db.session.commit()    
     except Exception as e:
         print(e)
         return {'status': f'db error'}
 
     return {'status': f'success'}
+
+
+@remake.after_request
+def add_header(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response

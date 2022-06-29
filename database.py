@@ -67,7 +67,7 @@ class 客户表(db.Model):
     行业 = db.Column(db.String(50))
     联系方式 = db.Column(db.String(20))
     集团 = db.Column(db.String(40))
-    违约情况 = db.Column(db.Boolean)
+    违约情况 = db.Column(db.Integer)
 
     def to_dict(self):
         model_dict = dict(self.__dict__)
@@ -125,7 +125,7 @@ class 重生人工审核表(db.Model):
 class 违约风险原因表(db.Model):
     违约原因编号 = db.Column(db.String(16), primary_key=True)
     违约原因 = db.Column(db.String(512))
-    是否启用 = db.Column(db.Boolean)
+    是否启用 = db.Column(db.Integer)
 
     def to_dict(self):
         model_dict = dict(self.__dict__)
@@ -173,6 +173,7 @@ class V_重生审核(db.Model):
     外部最新等级 = db.Column(db.String(2))
     认定人 = db.Column(db.String(128))
     认定申请时间 = db.Column(db.DateTime)
+    审核状态 = db.Column(db.String(20))
     重生原因 = db.Column(db.String(512))
 
     def to_dict(self):

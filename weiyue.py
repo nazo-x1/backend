@@ -89,6 +89,10 @@ def verify():
     setattr(applyForm, '认定人', g.user.username)
     try:
         # db.session.update(applyForm)
+        try:
+            db.session.update(applyForm)
+        except:
+            pass
         db.session.commit()
     except Exception as e:
         print(e)
@@ -110,7 +114,7 @@ def show():
 
 @weiyue.route('/reason', methods=['POST'])
 def reason():
-    enable = request.form.get("enable", type=bool, default=None)
+    enable = request.form.get("enable", type=int, default=None)
     if enable is None:
         try:
             reasons = 违约风险原因表.query.all()
@@ -119,19 +123,22 @@ def reason():
             return {'status': f'数据库连接失败,请联系管理员!'}
     else:
         try:
+            db.session.flush()
             reasons = 违约风险原因表.query.filter_by(是否启用=enable)
         except Exception as e:
             print(e)
+        return {'status': f'数据库连接失败,请联系管理员!'}
 
     return jsonify(to_json(reasons))
 
 
 @weiyue.route('/change_reason', methods=['POST'])
 def cgreason():
-    enable = request.form.get("enable", type=bool, default=None)
+    enable = request.form.get("enable", type=int, default=None)
     reasonid = request.form.get("reasonid", type=int, default=None)
     if enable is None:
         try:
+            db.session.flush()
             reasons = 违约风险原因表.query.all()
         except Exception as e:
             print(e)
@@ -141,7 +148,10 @@ def cgreason():
             reasons = 违约风险原因表.query.get(reasonid)
             setattr(reasons, '是否启用', enable)
             try:
-                # db.session.update(reasons)
+                try:
+                    db.session.update(reasons)
+                except:
+                    pass
                 db.session.commit()
                 # db.session.flush()
             except Exception as e:
@@ -157,14 +167,17 @@ def cgreason():
 @weiyue.route('/records', methods=['POST'])
 def showWeiyueRecords():
     passQuery = request.form.get("passed", type=str, default=None)
+    print(passQuery)
     if not passQuery:
         try:
+            db.session.flush()
             records = V_违约认定审核总信息.query.all()
         except Exception as e:
             print(e)
             return {'status': f'数据库连接失败,请联系管理员!'}
     else:
         try:
+            db.session.flush()
             records = V_违约认定审核总信息.query.filter_by(审核状态=passQuery)
         except Exception as e:
             print(e)
