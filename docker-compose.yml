@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+    db:
+        image: mysql:latest
+        restart: on-failure
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+          MYSQL_DATABASE: com
+          MYSQL_ROOT_PASSWORD: example
+        volumes:
+          - ./backend/User.sql:/docker-entrypoint-initdb.d/init.sql
+
+    backend:
+        build: ./backend/
+        restart: on-failure
+        volumes:
+            - ./backend:/www
+        ports:
+            - "8079:5000"
+    frontend:
+        image: httpd:latest
+        volumes:
+            - ./frontend:/usr/local/apache2/htdocs
+        ports:
+            - "8080:8000"
+        restart: on-failure
