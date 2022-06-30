@@ -166,6 +166,7 @@ def showWeiyueRecords():
     if not passQuery:
         try:
             db.session.flush()
+            db.session.commit()
             records = V_违约认定审核总信息.query.all()
         except Exception as e:
             print(e)
@@ -173,6 +174,7 @@ def showWeiyueRecords():
     else:
         try:
             db.session.flush()
+            db.session.commit()
             records = V_违约认定审核总信息.query.filter_by(审核状态=passQuery)
         except Exception as e:
             print(e)
