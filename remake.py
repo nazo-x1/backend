@@ -113,7 +113,6 @@ def verify():
     except Exception as e:
         print(e)
         return {'status': f'db error'}
-
     return {'status': f'success'}
 
 

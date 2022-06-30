@@ -58,11 +58,9 @@ def new():
     reasonid = request.form.get("reason", type=int, default=None)
     dangerLevel = request.form.get("dangerLevel", type=int, default='1')
     info = request.form.get("info", type=str, default=None)
-
     checkResult = checkCustomExist(customid)
     if not(checkResult['status'] == 'success'):
         return checkResult
-
     applyForm = 违约认定人工审核表(违约审核编号=os.urandom(8).hex(),客户号=customid, 违约原因编号=reasonid,
                           严重程度=dangerLevel, 认定人="", 外部最新等级=outLevel, 备注=info)
     try:
@@ -71,7 +69,6 @@ def new():
     except Exception as e:
         print(e)
         return {'status': f'db error'}
-
     return {'status': f'success'}
 
 
@@ -79,7 +76,6 @@ def new():
 def verify():
     passed = request.form.get("passed", type=str, default='').lower()
     id = request.form.get("id", type=str, default=None)
-
     checkResult, applyForm = getApplyForm(id)
     if not(checkResult['status'] == 'success'):
         return checkResult
@@ -97,7 +93,6 @@ def verify():
     except Exception as e:
         print(e)
         return {'status': f'db error'}
-
     return {'status': f'success'}
 
 
